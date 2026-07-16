@@ -2,6 +2,7 @@ services:
   - type: web
     name: impossible-challenge
     runtime: docker
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: PYTHON_VERSION
