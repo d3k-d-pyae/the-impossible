@@ -1,7 +1,7 @@
 /**
  * Impossible Extension - Content Script
  * 
- * Injected into pages on {{RENDER_URL}}/*
+ * Injected into pages on https://the-impossible.onrender.com/*
  * Handles communication between web page and extension
  */
 

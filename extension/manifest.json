@@ -11,7 +11,7 @@
     ],
     
     "host_permissions": [
-        "{{RENDER_URL}}/*"
+        "https://the-impossible.onrender.com/*"
     ],
     
     "background": {
@@ -29,7 +29,7 @@
     
     "content_scripts": [
         {
-            "matches": ["{{RENDER_URL}}/*"],
+            "matches": ["https://the-impossible.onrender.com/*"],
             "js": ["content.js"],
             "css": ["content.css"]
         }

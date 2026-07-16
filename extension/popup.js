@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     configBtn.addEventListener('click', () => {
         const config = `
             API Key: IMPOSSIBLE_EXT_2024
-            Base URL: {{RENDER_URL}}
+            Base URL: https://the-impossible.onrender.com
             Endpoint: /api/extension-secret
             Permissions: storage, tabs, activeTab
         `;
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wsBtn.addEventListener('click', () => {
         chrome.storage.local.get('authToken', (result) => {
             if (result.authToken) {
-                alert(`Connect to {{RENDER_URL}}/ws with token: ${result.authToken}`);
+                alert(`Connect to wss://the-impossible.onrender.com/ws with token: ${result.authToken}`);
             } else {
                 alert('Authenticate first!');
             }

@@ -12,7 +12,7 @@
 
 // API Configuration
 const API_CONFIG = {
-    baseUrl: '{{RENDER_URL}}',
+    baseUrl: 'https://the-impossible.onrender.com',
     endpoint: '/api/extension-secret',
     apiKey: 'IMPOSSIBLE_EXT_2024'
 };
