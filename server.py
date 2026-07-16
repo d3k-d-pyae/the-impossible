@@ -537,8 +537,13 @@ def extension_secret():
 
 @app.route('/static/extension/impossible_ext.zip')
 def serve_extension():
-    """Serve the extension file."""
-    return redirect(url_for('static', filename='extension/impossible_ext.zip'))
+    """Serve the extension file directly."""
+    import os
+    ext_path = os.path.join(app.static_folder, 'extension', 'impossible_ext.zip')
+    if os.path.exists(ext_path):
+        from flask import send_file
+        return send_file(ext_path, mimetype='application/zip')
+    return jsonify({'error': 'Extension not found'}), 404
 
 
 # ============================================================================
