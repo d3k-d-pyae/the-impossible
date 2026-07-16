@@ -57,7 +57,7 @@ RATE_LIMIT_MAX = 50  # requests per window
 # IP tracking for abuse prevention
 blocked_ips = set()
 failed_attempts = defaultdict(int)
-MAX_FAILED_ATTEMPTS = 10
+MAX_FAILED_ATTEMPTS = 50
 
 # CSRF tokens
 csrf_tokens = {}
@@ -622,16 +622,34 @@ def handle_authenticate(data):
         'challenge': 'math_speed'
     })
     
-    # Start challenge after brief delay
-    def start_challenge():
-        time.sleep(1)
-        socketio.emit('start_challenge', {
-            'type': 'math_speed',
-            'instructions': 'Solve the math problem as fast as possible!',
-            'time_limit_ms': 100
-        }, room=request.sid)
+    # Generate and send challenge immediately
+    a = random.randint(10, 99)
+    b = random.randint(10, 99)
+    operation = random.choice(['+', '-', '*'])
     
-    threading.Thread(target=start_challenge).start()
+    if operation == '+':
+        answer = a + b
+    elif operation == '-':
+        answer = a - b
+    else:
+        answer = a * b
+    
+    problem = f"{a} {operation} {b}"
+    challenge_id = secrets.token_hex(8)
+    
+    websocket_tokens[request.sid]['current_challenge'] = {
+        'problem': problem,
+        'answer': answer,
+        'id': challenge_id,
+        'start_time': time.time()
+    }
+    websocket_tokens[request.sid]['challenge_started'] = True
+    
+    emit('challenge', {
+        'id': challenge_id,
+        'problem': problem,
+        'time_limit_ms': 5000
+    })
 
 
 @socketio.on('solve_challenge')
