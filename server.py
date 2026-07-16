@@ -363,7 +363,7 @@ def hidden_sanctum():
                                             token=token, 
                                             encoded_hint=encoded_hint,
                                             csrf_token=csrf_token))
-    response.set_cookie('session_id', session_id, httponly=True, samesite='Lax', domain='localhost')
+    response.set_cookie('session_id', session_id, httponly=True, samesite='Lax')
     return response
 
 
@@ -1089,7 +1089,7 @@ def index():
     csrf_token = generate_csrf_token()
     
     response = make_response(render_template('index.html', csrf_token=csrf_token))
-    response.set_cookie('session_id', session_id, httponly=True, samesite='Lax', domain='localhost')
+    response.set_cookie('session_id', session_id, httponly=True, samesite='Lax')
     return response
 
 
