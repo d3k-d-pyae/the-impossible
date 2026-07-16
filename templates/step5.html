@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - System Diagnostics</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Diagnostics</a>
+                <a href="#" class="nav-link">Maintenance</a>
+                <a href="#" class="nav-link">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="diagnostics">
+        <div class="diagnostics-container">
+            <div class="diagnostics-header">
+                <h1>System Diagnostics</h1>
+                <p>Run diagnostic tests to ensure system integrity and performance.</p>
+            </div>
+
+            <div class="diagnostics-grid">
+                <div class="diagnostics-card">
+                    <h2>Resource Lock Test</h2>
+                    <p>This test verifies that resources can be properly locked and unlocked.</p>
+                    
+                    <div class="test-status" id="lock-status">
+                        <span class="test-dot pending"></span>
+                        <span class="test-text">Ready to test</span>
+                    </div>
+                    
+                    <div class="test-controls">
+                        <button class="test-button" id="lock-btn" onclick="runLockTest()">
+                            Run Lock Test
+                        </button>
+                        <button class="test-button secondary" id="reset-btn" onclick="resetTest()" disabled>
+                            Reset
+                        </button>
+                    </div>
+                    
+                    <div class="test-requirements">
+                        <h4>Test Requirements:</h4>
+                        <ul>
+                            <li>Two simultaneous requests must succeed</li>
+                            <li>Time window: 100ms between lock and unlock</li>
+                            <li>Tests concurrent access handling</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagnostics-card">
+                    <h2>System Health</h2>
+                    <div class="health-grid">
+                        <div class="health-item">
+                            <span class="health-label">CPU Load</span>
+                            <span class="health-value">23%</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Memory</span>
+                            <span class="health-value">4.2 GB</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Disk I/O</span>
+                            <span class="health-value">Normal</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Network</span>
+                            <span class="health-value">Stable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagnostics-card full-width">
+                    <h2>Test Results</h2>
+                    <div class="results-log" id="results-log">
+                        <div class="result-entry">
+                            <span class="result-time">--:--:--</span>
+                            <span class="result-status pending">WAITING</span>
+                            <span class="result-message">Diagnostics ready. Click "Run Lock Test" to begin.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagnostics-footer">
+                <p>After completing the diagnostic tests, you can proceed to the next section.</p>
+                <a href="/step6" class="next-button" id="next-btn" style="display: none;">Continue to Configuration →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        .diagnostics {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .diagnostics-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .diagnostics-header {
+            margin-bottom: 2rem;
+        }
+        
+        .diagnostics-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .diagnostics-header p {
+            color: #666;
+        }
+        
+        .diagnostics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .diagnostics-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .diagnostics-card.full-width {
+            grid-column: span 2;
+        }
+        
+        .diagnostics-card h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .diagnostics-card > p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .test-status {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        
+        .test-dot.pending {
+            background: #ff9800;
+        }
+        
+        .test-dot.running {
+            background: #2196f3;
+            animation: pulse 1s infinite;
+        }
+        
+        .test-dot.success {
+            background: #4caf50;
+        }
+        
+        .test-dot.error {
+            background: #f44336;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .test-text {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-button {
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .test-button:hover {
+            background: #d63851;
+        }
+        
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .test-button.secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .test-button.secondary:hover {
+            background: #eee;
+        }
+        
+        .test-requirements {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .test-requirements h4 {
+            font-size: 0.9rem;
+            color: #1a1a2e;
+            margin-bottom: 0.75rem;
+        }
+        
+        .test-requirements ul {
+            margin-left: 1.25rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .test-requirements li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .health-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .health-label {
+            color: #666;
+        }
+        
+        .health-value {
+            font-weight: 500;
+            color: #1a1a2e;
+        }
+        
+        .results-log {
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        
+        .result-entry {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .result-time {
+            color: #999;
+            min-width: 60px;
+        }
+        
+        .result-status {
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .result-status.pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .result-status.running {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .result-status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .result-status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .result-message {
+            color: #666;
+        }
+        
+        .diagnostics-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .diagnostics-footer p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .next-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .next-button:hover {
+            background: #d63851;
+        }
+        
+        @media (max-width: 768px) {
+            .diagnostics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .diagnostics-card.full-width {
+                grid-column: span 1;
+            }
+            
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Store token
+        localStorage.setItem('step5_token', '{{ token }}');
+        
+        async function runLockTest() {
+            const lockBtn = document.getElementById('lock-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const statusDot = document.querySelector('.test-dot');
+            const statusText = document.querySelector('.test-text');
+            
+            lockBtn.disabled = true;
+            statusDot.className = 'test-dot running';
+            statusText.textContent = 'Running test...';
+            
+            addResult('Initiating lock test...', 'running');
+            
+            try {
+                // Send both requests simultaneously
+                const [lockResponse, unlockResponse] = await Promise.all([
+                    fetch('/api/race/lock', { method: 'POST' }),
+                    fetch('/api/race/unlock', { method: 'POST' })
+                ]);
+                
+                const lockData = await lockResponse.json();
+                const unlockData = await unlockResponse.json();
+                
+                addResult('Lock response: ' + (lockData.message || lockData.error), 'running');
+                addResult('Unlock response: ' + (unlockData.message || unlockData.error), 'running');
+                
+                // Try to complete
+                const completeResponse = await fetch('/api/race/complete', { method: 'POST' });
+                const completeData = await completeResponse.json();
+                
+                if (completeData.success) {
+                    statusDot.className = 'test-dot success';
+                    statusText.textContent = 'Test completed successfully';
+                    addResult('Lock test passed! Resource access verified.', 'success');
+                    localStorage.setItem('step5_token', completeData.token);
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                } else {
+                    statusDot.className = 'test-dot error';
+                    statusText.textContent = 'Test failed';
+                    addResult('Lock test failed: ' + (completeData.error || 'Unknown error'), 'error');
+                    lockBtn.disabled = false;
+                }
+            } catch (error) {
+                statusDot.className = 'test-dot error';
+                statusText.textContent = 'Test error';
+                addResult('Network error: ' + error.message, 'error');
+                lockBtn.disabled = false;
+            }
+            
+            resetBtn.disabled = false;
+        }
+        
+        function resetTest() {
+            const lockBtn = document.getElementById('lock-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const statusDot = document.querySelector('.test-dot');
+            const statusText = document.querySelector('.test-text');
+            
+            lockBtn.disabled = false;
+            resetBtn.disabled = true;
+            statusDot.className = 'test-dot pending';
+            statusText.textContent = 'Ready to test';
+            
+            document.getElementById('results-log').innerHTML = `
+                <div class="result-entry">
+                    <span class="result-time">--:--:--</span>
+                    <span class="result-status pending">WAITING</span>
+                    <span class="result-message">Diagnostics reset. Ready to run tests.</span>
+                </div>
+            `;
+        }
+        
+        function addResult(message, status) {
+            const log = document.getElementById('results-log');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'result-entry';
+            entry.innerHTML = `
+                <span class="result-time">${time}</span>
+                <span class="result-status ${status}">${status.toUpperCase()}</span>
+                <span class="result-message">${message}</span>
+            `;
+            log.insertBefore(entry, log.firstChild);
+        }
+    </script>
+</body>
+</html>

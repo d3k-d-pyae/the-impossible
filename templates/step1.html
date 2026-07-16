@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link">Projects</a>
+                <a href="#" class="nav-link">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Welcome back</h1>
+                <p>Here's what's happening with your account today.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">◆</div>
+                    <div class="stat-info">
+                        <span class="stat-value">Active</span>
+                        <span class="stat-label">Account Status</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">◇</div>
+                    <div class="stat-info">
+                        <span class="stat-value">Premium</span>
+                        <span class="stat-label">Subscription Tier</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">△</div>
+                    <div class="stat-info">
+                        <span class="stat-value">2026</span>
+                        <span class="stat-label">Member Since</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="content-card">
+                    <h2>Account Overview</h2>
+                    <p>Your account is fully verified and in good standing.</p>
+                    
+                    <div class="info-section">
+                        <div class="info-row">
+                            <span class="info-label">Account ID:</span>
+                            <span class="info-value">NX-{{ token[:8] }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Last Login:</span>
+                            <span class="info-value">Today, 09:45 AM</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Security Level:</span>
+                            <span class="info-value">Enhanced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-dot active"></span>
+                            <div class="activity-info">
+                                <p>System verification completed</p>
+                                <span class="activity-time">2 minutes ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-dot"></span>
+                            <div class="activity-info">
+                                <p>Profile updated successfully</p>
+                                <span class="activity-time">1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-dot"></span>
+                            <div class="activity-info">
+                                <p>New session initiated</p>
+                                <span class="activity-time">3 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card full-width">
+                    <h2>System Notifications</h2>
+                    <div class="notification-box">
+                        <p>Your account has been successfully provisioned. All systems are operational.</p>
+                        <span class="notification-badge">Info</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-footer">
+                <a href="/step2" class="action-button primary">Continue to Portal →</a>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .dashboard {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-header p {
+            color: #666;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            color: #e94560;
+        }
+        
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .content-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-card.full-width {
+            grid-column: span 2;
+        }
+        
+        .content-card h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+        
+        .content-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .info-section {
+            margin-top: 1rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #666;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: #1a1a2e;
+            font-family: monospace;
+        }
+        
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            margin-top: 0.5rem;
+        }
+        
+        .activity-dot.active {
+            background: #4caf50;
+        }
+        
+        .activity-info p {
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        .notification-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .notification-box p {
+            margin: 0;
+        }
+        
+        .notification-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .dashboard-footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .action-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background: #d63851;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-card.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+
+    <script>
+        // Store token for later steps
+        localStorage.setItem('step1_token', '{{ token }}');
+    </script>
+</body>
+</html>

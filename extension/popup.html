@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impossible Extension</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            background: #1a1a2e;
+            color: #00ff00;
+        }
+        
+        h1 {
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00ffff;
+        }
+        
+        .status {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .status.ready {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+        }
+        
+        .status.connecting {
+            background: rgba(255, 170, 0, 0.2);
+            border: 1px solid #ffaa00;
+            animation: pulse 1s infinite;
+        }
+        
+        .status.error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+            border: 1px solid #666;
+        }
+        
+        .btn-secondary:hover {
+            background: #444;
+        }
+        
+        .token-box {
+            background: #0a0a0a;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+        
+        .token-box p {
+            color: #888;
+            margin-bottom: 5px;
+            font-size: 0.8em;
+        }
+        
+        .token {
+            color: #00ff00;
+            font-size: 1em;
+        }
+        
+        .hint {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .info {
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            padding: 5px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>⚡ IMPOSSIBLE EXT</h1>
+    
+    <div class="info">
+        <strong>API Key:</strong> IMPOSSIBLE_EXT_2024<br>
+        <strong>Endpoint:</strong> /api/extension-secret
+    </div>
+    
+    <div class="status ready" id="status">READY</div>
+    
+    <button class="btn btn-primary" id="authBtn">
+        🔑 AUTHENTICATE
+    </button>
+    
+    <button class="btn btn-secondary" id="configBtn">
+        ⚙️ SHOW CONFIG
+    </button>
+    
+    <button class="btn btn-secondary" id="wsBtn">
+        🔌 CONNECT WS
+    </button>
+    
+    <div class="token-box" id="tokenBox" style="display: none;">
+        <p>Your Token:</p>
+        <div class="token" id="tokenValue">Loading...</div>
+    </div>
+    
+    <div class="hint">
+        Step 3 of the Impossible Challenge
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Documentation</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Documentation</a>
+                <a href="#" class="nav-link">API</a>
+                <a href="#" class="nav-link">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="documentation">
+        <div class="doc-container">
+            <div class="doc-sidebar">
+                <h3>Documentation</h3>
+                <ul class="doc-nav">
+                    <li><a href="#" class="active">Getting Started</a></li>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Authentication</a></li>
+                    <li><a href="#">Webhooks</a></li>
+                    <li><a href="#">SDKs</a></li>
+                </ul>
+            </div>
+
+            <div class="doc-content">
+                <div class="doc-header">
+                    <h1>API Authentication</h1>
+                    <p class="doc-meta">Last updated: January 2026</p>
+                </div>
+
+                <div class="doc-section">
+                    <h2>Overview</h2>
+                    <p>
+                        Our API uses token-based authentication for secure access. 
+                        All requests must include a valid authentication token in the headers.
+                    </p>
+                </div>
+
+                <div class="doc-section">
+                    <h2>Authentication Flow</h2>
+                    <p>
+                        To authenticate with the API, you need to include the following headers in your requests:
+                    </p>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>HTTP Headers</span>
+                            <button class="copy-button" onclick="copyCode()">Copy</button>
+                        </div>
+                        <pre><code>Authorization: Bearer YOUR_API_TOKEN
+Content-Type: application/json
+X-Api-Version: 2024-01</code></pre>
+                    </div>
+                </div>
+
+                <div class="doc-section">
+                    <h2>Endpoint Configuration</h2>
+                    <p>
+                        The API endpoint for authentication is configured in the system settings. 
+                        Make sure to use the correct endpoint for your region.
+                    </p>
+                    
+                    <div class="info-box">
+                        <strong>Note:</strong> The authentication endpoint requires a specific header 
+                        format. Please refer to the system configuration for details.
+                    </div>
+                </div>
+
+                <div class="doc-section">
+                    <h2>System Verification</h2>
+                    <p>
+                        Before proceeding, please verify the following information:
+                    </p>
+                    
+                    <div class="verification-form">
+                        <div class="form-group">
+                            <label>Verification Code:</label>
+                            <input type="text" id="verification-code" placeholder="Enter the decoded value...">
+                        </div>
+                        <button class="submit-button" onclick="verifyCode()">Verify</button>
+                        <div id="verification-result"></div>
+                    </div>
+                </div>
+
+                <div class="doc-section">
+                    <h2>Error Handling</h2>
+                    <p>
+                        If authentication fails, the API will return a 401 status code. 
+                        Ensure your token is valid and has not expired.
+                    </p>
+                </div>
+
+                {{ hidden_comment }}
+
+                <div class="doc-footer">
+                    <a href="/step3" class="next-button" id="next-btn" style="display: none;">Continue to Integration Guide →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        .documentation {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .doc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .doc-sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .doc-sidebar h3 {
+            font-size: 1rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .doc-nav {
+            list-style: none;
+        }
+        
+        .doc-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .doc-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        
+        .doc-nav a:hover,
+        .doc-nav a.active {
+            background: #f0f0f0;
+            color: #1a1a2e;
+        }
+        
+        .doc-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .doc-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .doc-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .doc-meta {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .doc-section {
+            margin-bottom: 2rem;
+        }
+        
+        .doc-section h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+        
+        .doc-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .code-block {
+            background: #1a1a2e;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #16213e;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        .copy-button {
+            background: none;
+            border: 1px solid #444;
+            color: #999;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .copy-button:hover {
+            background: #333;
+            color: white;
+        }
+        
+        .code-block pre {
+            padding: 1rem;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #e94560;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+        
+        .info-box strong {
+            color: #1976d2;
+        }
+        
+        .verification-form {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: monospace;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .submit-button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .submit-button:hover {
+            background: #d63851;
+        }
+        
+        #verification-result {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        #verification-result.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        
+        #verification-result.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        
+        .doc-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .next-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .next-button:hover {
+            background: #d63851;
+        }
+        
+        @media (max-width: 768px) {
+            .doc-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .doc-sidebar {
+                display: none;
+            }
+        }
+    </style>
+
+    <script>
+        // Store token
+        localStorage.setItem('step2_token', '{{ token }}');
+        
+        function copyCode() {
+            const code = document.querySelector('.code-block code').textContent;
+            navigator.clipboard.writeText(code);
+        }
+        
+        async function verifyCode() {
+            const code = document.getElementById('verification-code').value.trim();
+            const result = document.getElementById('verification-result');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            
+            try {
+                const response = await fetch('/api/check-step2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({
+                        token: '{{ token }}',
+                        decoded_message: code
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.textContent = '✓ Verification successful! You can now proceed.';
+                    result.className = 'success';
+                    localStorage.setItem('step2_token', data.next_token);
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                } else {
+                    result.textContent = '✗ ' + data.error;
+                    result.className = 'error';
+                }
+            } catch (error) {
+                result.textContent = '✗ Network error. Please try again.';
+                result.className = 'error';
+            }
+        }
+        
+        // Enter key submission
+        document.getElementById('verification-code').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyCode();
+        });
+    </script>
+</body>
+</html>

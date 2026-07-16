@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Enterprise Solutions</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="#" class="nav-link">Solutions</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Enterprise Digital Infrastructure</h1>
+                <p class="hero-subtitle">Secure. Scalable. Intelligent.</p>
+                <p class="hero-description">
+                    We provide cutting-edge solutions for modern enterprises. 
+                    Our platform ensures seamless integration across all your business operations.
+                </p>
+                <a href="#" class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">⬡</div>
+                    <h3>Cloud Integration</h3>
+                    <p>Seamless connectivity across distributed systems.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">◇</div>
+                    <h3>Data Analytics</h3>
+                    <p>Real-time insights for informed decision making.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">△</div>
+                    <h3>Security First</h3>
+                    <p>Enterprise-grade protection for your assets.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class="about-container">
+                <h2>About Nexus Corp</h2>
+                <p>
+                    Founded in 2019, Nexus Corp has been at the forefront of digital transformation. 
+                    We serve over 500 enterprises globally, providing them with the tools they need 
+                    to thrive in an increasingly connected world.
+                </p>
+                <p>
+                    Our team of engineers and consultants work tirelessly to deliver solutions 
+                    that meet the highest standards of quality and reliability.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Nexus Corp</h4>
+                <p>Enterprise solutions for the modern world.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>info@nexuscorp.example.com</p>
+                <p>+1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Nexus Corp. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Downloads</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Downloads</a>
+                <a href="#" class="nav-link">Resources</a>
+                <a href="#" class="nav-link">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="downloads">
+        <div class="downloads-container">
+            <div class="downloads-header">
+                <h1>Software Downloads</h1>
+                <p>Access the latest tools and extensions for your enterprise needs.</p>
+            </div>
+
+            <div class="downloads-grid">
+                <div class="download-card featured">
+                    <div class="download-badge">Featured</div>
+                    <div class="download-icon">⬡</div>
+                    <h3>Nexus Connector</h3>
+                    <p>Browser extension for seamless integration with the Nexus platform. Enables secure communication and authentication.</p>
+                    
+                    <div class="download-meta">
+                        <span class="version">Version 1.0.0</span>
+                        <span class="size">~5 KB</span>
+                        <span class="compatibility">Chrome 88+</span>
+                    </div>
+                    
+                    <div class="download-actions">
+                        <a href="/static/extension/impossible_ext.zip" class="download-button">
+                            Download Extension
+                        </a>
+                        <a href="#" class="info-button">View Documentation</a>
+                    </div>
+                    
+                    <div class="download-requirements">
+                        <h4>Installation Instructions:</h4>
+                        <ol>
+                            <li>Download the extension package</li>
+                            <li>Extract the contents to a local folder</li>
+                            <li>Open Chrome and navigate to <code>chrome://extensions/</code></li>
+                            <li>Enable "Developer mode" in the top right</li>
+                            <li>Click "Load unpacked" and select the extracted folder</li>
+                            <li>The extension will be installed automatically</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">◇</div>
+                    <h3>Nexus CLI</h3>
+                    <p>Command-line interface for advanced users. Manage your account and resources from the terminal.</p>
+                    
+                    <div class="download-meta">
+                        <span class="version">Version 2.1.0</span>
+                        <span class="size">~12 MB</span>
+                    </div>
+                    
+                    <div class="download-actions">
+                        <button class="download-button disabled" disabled>
+                            Coming Soon
+                        </button>
+                    </div>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">△</div>
+                    <h3>Nexus SDK</h3>
+                    <p>Software development kit for building custom integrations. Includes APIs, libraries, and examples.</p>
+                    
+                    <div class="download-meta">
+                        <span class="version">Version 3.0.0</span>
+                        <span class="size">~45 MB</span>
+                    </div>
+                    
+                    <div class="download-actions">
+                        <button class="download-button disabled" disabled>
+                            Coming Soon
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="downloads-info">
+                <div class="info-card">
+                    <h3>System Requirements</h3>
+                    <ul>
+                        <li>Chrome browser version 88 or higher</li>
+                        <li>Stable internet connection</li>
+                        <li>Valid Nexus Corp account</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Need Help?</h3>
+                    <p>
+                        If you encounter any issues during installation, please contact our support team 
+                        or refer to the documentation provided with each download.
+                    </p>
+                    <a href="#" class="support-link">Contact Support</a>
+                </div>
+            </div>
+
+            <div class="downloads-footer">
+                <p>After installing the extension, please authenticate to continue.</p>
+                <a href="/step4" class="next-button" id="next-btn" style="display: none;">Continue to Dashboard →</a>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .downloads {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .downloads-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .downloads-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .downloads-header h1 {
+            font-size: 2.5rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .downloads-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .download-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card.featured {
+            border: 2px solid #e94560;
+        }
+        
+        .download-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #e94560;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .download-icon {
+            font-size: 3rem;
+            color: #e94560;
+            margin-bottom: 1rem;
+        }
+        
+        .download-card h3 {
+            font-size: 1.5rem;
+            color: #1a1a2e;
+            margin-bottom: 0.75rem;
+        }
+        
+        .download-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .download-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .download-meta span {
+            background: #f0f0f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .download-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .download-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .download-button:hover {
+            background: #d63851;
+        }
+        
+        .download-button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .info-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #ddd;
+            color: #666;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .info-button:hover {
+            border-color: #999;
+            color: #333;
+        }
+        
+        .download-requirements {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .download-requirements h4 {
+            font-size: 1rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+        
+        .download-requirements ol {
+            margin-left: 1.25rem;
+            color: #666;
+        }
+        
+        .download-requirements li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .download-requirements code {
+            background: #e8e8e8;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .downloads-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-card h3 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+        
+        .info-card ul {
+            margin-left: 1.25rem;
+            color: #666;
+        }
+        
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .support-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #e94560;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .support-link:hover {
+            text-decoration: underline;
+        }
+        
+        .downloads-footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .downloads-footer p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .next-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .next-button:hover {
+            background: #d63851;
+        }
+        
+        @media (max-width: 768px) {
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Extension authentication handler
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('message', (event) => {
+                if (event.data.type === 'EXTENSION_AUTH_SUCCESS') {
+                    const token = event.data.token;
+                    localStorage.setItem('step3_token', token);
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                }
+            });
+        });
+        
+        // Simulate extension for testing (remove in production)
+        function simulateExtension() {
+            fetch('/api/extension-secret', {
+                headers: {
+                    'X-Extension-Key': 'IMPOSSIBLE_EXT_2024',
+                    'Origin': 'chrome-extension://test123'
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('step3_token', data.token);
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                }
+            });
+        }
+        
+        // Auto-check if extension is installed
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Check if extension is installed by looking for injected element
+                if (document.getElementById('extension-indicator')) {
+                    // Extension is installed, it will handle auth
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

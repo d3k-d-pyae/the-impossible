@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Real-time Monitor</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Monitor</a>
+                <a href="#" class="nav-link">Analytics</a>
+                <a href="#" class="nav-link">Reports</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="monitor">
+        <div class="monitor-container">
+            <div class="monitor-header">
+                <h1>Real-time System Monitor</h1>
+                <p>Monitor your system status and performance metrics in real-time.</p>
+            </div>
+
+            <div class="monitor-grid">
+                <div class="monitor-card connection-card">
+                    <h2>Connection Status</h2>
+                    <div class="status-indicator" id="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Disconnected</span>
+                    </div>
+                    
+                    <div class="connection-form">
+                        <div class="form-group">
+                            <label>Authentication Token:</label>
+                            <input type="text" id="auth-token" placeholder="Enter your token...">
+                        </div>
+                        <button class="connect-button" id="connect-btn" onclick="connectMonitor()">
+                            Connect to Monitor
+                        </button>
+                    </div>
+                </div>
+
+                <div class="monitor-card metrics-card">
+                    <h2>Performance Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="metric-value" id="latency">--</span>
+                            <span class="metric-label">Latency (ms)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="throughput">--</span>
+                            <span class="metric-label">Throughput</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="uptime">--</span>
+                            <span class="metric-label">Uptime</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monitor-card activity-card">
+                    <h2>System Activity</h2>
+                    <div class="activity-log" id="activity-log">
+                        <div class="log-entry">
+                            <span class="log-time">--:--:--</span>
+                            <span class="log-message">Waiting for connection...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monitor-card challenge-card">
+                    <h2>System Verification</h2>
+                    <p>Complete the verification to ensure system integrity.</p>
+                    
+                    <div class="challenge-content" id="challenge-content" style="display: none;">
+                        <div class="challenge-problem">
+                            <span class="challenge-label">Calculate:</span>
+                            <span class="challenge-equation" id="challenge-equation">--</span>
+                        </div>
+                        <div class="challenge-timer">
+                            <span class="timer-label">Time remaining:</span>
+                            <span class="timer-value" id="timer-value">--</span>
+                        </div>
+                        <div class="challenge-input">
+                            <input type="number" id="challenge-answer" placeholder="Enter answer...">
+                            <button class="submit-button" onclick="submitAnswer()">Submit</button>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-result" id="challenge-result"></div>
+                </div>
+            </div>
+
+            <div class="monitor-footer">
+                <p>After completing the verification, you can proceed to the next section.</p>
+                <a href="/step5" class="next-button" id="next-btn" style="display: none;">Continue to System Check →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        .monitor {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .monitor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .monitor-header {
+            margin-bottom: 2rem;
+        }
+        
+        .monitor-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .monitor-header p {
+            color: #666;
+        }
+        
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .monitor-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .monitor-card h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        
+        .status-dot.connected {
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-text {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .connection-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .connect-button {
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+        
+        .connect-button:hover {
+            background: #d63851;
+        }
+        
+        .connect-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .activity-log {
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        
+        .log-entry {
+            display: flex;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .log-time {
+            color: #999;
+            min-width: 60px;
+        }
+        
+        .log-message {
+            color: #666;
+        }
+        
+        .challenge-content {
+            margin-top: 1rem;
+        }
+        
+        .challenge-problem {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .challenge-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .challenge-equation {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            font-family: monospace;
+        }
+        
+        .challenge-timer {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timer-label {
+            color: #666;
+        }
+        
+        .timer-value {
+            font-weight: 600;
+            color: #e94560;
+        }
+        
+        .challenge-input {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .challenge-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .challenge-input input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .submit-button {
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .submit-button:hover {
+            background: #d63851;
+        }
+        
+        .challenge-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .challenge-result.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        
+        .challenge-result.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        
+        .monitor-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .monitor-footer p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .next-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .next-button:hover {
+            background: #d63851;
+        }
+        
+        @media (max-width: 768px) {
+            .monitor-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        let socket = null;
+        let currentChallenge = null;
+        let timerInterval = null;
+        
+        // Store token
+        localStorage.setItem('step4_token', '{{ token }}');
+        
+        function connectMonitor() {
+            const token = document.getElementById('auth-token').value;
+            if (!token) {
+                alert('Please enter your authentication token');
+                return;
+            }
+            
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusDot = statusIndicator.querySelector('.status-dot');
+            const statusText = statusIndicator.querySelector('.status-text');
+            
+            statusText.textContent = 'Connecting...';
+            
+            socket = new WebSocket('{{ ws_url }}');
+            
+            socket.onopen = () => {
+                addLog('Connected to monitor');
+                socket.send(JSON.stringify({
+                    type: 'authenticate',
+                    token: token
+                }));
+            };
+            
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMonitorMessage(data);
+            };
+            
+            socket.onclose = () => {
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'Disconnected';
+                addLog('Connection closed');
+            };
+            
+            socket.onerror = (error) => {
+                statusText.textContent = 'Connection error';
+                addLog('Error: Could not connect');
+            };
+        }
+        
+        function handleMonitorMessage(data) {
+            switch(data.message || data.type) {
+                case 'authenticated':
+                    document.querySelector('.status-dot').classList.add('connected');
+                    document.querySelector('.status-text').textContent = 'Connected';
+                    addLog('Authentication successful');
+                    
+                    // Update metrics
+                    document.getElementById('latency').textContent = '12';
+                    document.getElementById('throughput').textContent = '1.2k/s';
+                    document.getElementById('uptime').textContent = '99.9%';
+                    
+                    // Show challenge after delay
+                    setTimeout(() => {
+                        addLog('System verification required');
+                        document.getElementById('challenge-content').style.display = 'block';
+                    }, 1500);
+                    break;
+                    
+                case 'challenge':
+                    currentChallenge = data;
+                    document.getElementById('challenge-equation').textContent = data.problem;
+                    startTimer(data.time_limit_ms);
+                    addLog('Verification challenge received');
+                    break;
+                    
+                case 'challenge_solved':
+                    addLog('Verification completed in ' + data.elapsed_ms + 'ms');
+                    showResult('✓ Verification successful!', 'success');
+                    localStorage.setItem('step4_token', data.next_token);
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                    break;
+                    
+                case 'error':
+                    addLog('Error: ' + data.message);
+                    showResult('✗ ' + data.message, 'error');
+                    break;
+            }
+        }
+        
+        function startTimer(ms) {
+            let remaining = ms;
+            const timerValue = document.getElementById('timer-value');
+            
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                remaining -= 100;
+                timerValue.textContent = remaining + 'ms';
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    showResult('✗ Time expired', 'error');
+                }
+            }, 100);
+        }
+        
+        function submitAnswer() {
+            const answer = document.getElementById('challenge-answer').value;
+            if (!answer || !socket) return;
+            
+            socket.send(JSON.stringify({
+                type: 'solve_challenge',
+                answer: parseInt(answer)
+            }));
+            
+            clearInterval(timerInterval);
+        }
+        
+        function addLog(message) {
+            const log = document.getElementById('activity-log');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `
+                <span class="log-time">${time}</span>
+                <span class="log-message">${message}</span>
+            `;
+            log.insertBefore(entry, log.firstChild);
+        }
+        
+        function showResult(message, type) {
+            const result = document.getElementById('challenge-result');
+            result.textContent = message;
+            result.className = 'challenge-result ' + type;
+        }
+        
+        // Enter key submission
+        document.getElementById('challenge-answer')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitAnswer();
+        });
+    </script>
+</body>
+</html>

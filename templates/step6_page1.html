@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Configuration</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Configuration</a>
+                <a href="#" class="nav-link">Settings</a>
+                <a href="#" class="nav-link">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="configuration">
+        <div class="config-container">
+            <div class="config-header">
+                <h1>System Configuration</h1>
+                <p>Configure your system parameters and security settings.</p>
+            </div>
+
+            <div class="config-progress">
+                <div class="progress-step completed">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Alpha</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Beta</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Gamma</span>
+                </div>
+            </div>
+
+            <div class="config-card">
+                <div class="config-section">
+                    <h2>Section 1: Alpha Configuration</h2>
+                    <p>Enter the configuration value for the Alpha parameter.</p>
+                    
+                    <div class="config-value-box">
+                        <span class="value-label">Configuration Value:</span>
+                        <span class="value-display" id="config-value">Loading...</span>
+                        <button class="copy-button" onclick="copyConfigValue()">Copy</button>
+                    </div>
+                    
+                    <div class="config-info">
+                        <p>This value has been stored in your local configuration. Make sure to note it down for verification.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-navigation">
+                <a href="/step5" class="nav-button back">← Previous</a>
+                <a href="/step6/page2" class="nav-button next">Next Section →</a>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .configuration {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .config-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .config-header {
+            margin-bottom: 2rem;
+        }
+        
+        .config-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .config-header p {
+            color: #666;
+        }
+        
+        .config-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .progress-step.completed .step-number {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .progress-step.active .step-number {
+            background: #e94560;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .progress-line {
+            width: 100px;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 0 1rem;
+        }
+        
+        .progress-step.completed + .progress-line {
+            background: #4caf50;
+        }
+        
+        .config-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .config-section h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .config-section > p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .config-value-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-label {
+            color: #666;
+            white-space: nowrap;
+        }
+        
+        .value-display {
+            font-family: monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            flex: 1;
+        }
+        
+        .copy-button {
+            padding: 0.5rem 1rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .copy-button:hover {
+            background: #d63851;
+        }
+        
+        .config-info {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .config-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .config-navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-button.back {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .nav-button.back:hover {
+            background: #eee;
+        }
+        
+        .nav-button.next {
+            background: #e94560;
+            color: white;
+        }
+        
+        .nav-button.next:hover {
+            background: #d63851;
+        }
+    </style>
+
+    <script>
+        // Store the configuration value in localStorage
+        localStorage.setItem('alpha', 'PHOENIX');
+        localStorage.setItem('step6_page1', 'true');
+        
+        // Display the value
+        document.getElementById('config-value').textContent = 'PHOENIX';
+        
+        function copyConfigValue() {
+            navigator.clipboard.writeText('PHOENIX');
+            alert('Configuration value copied!');
+        }
+    </script>
+</body>
+</html>

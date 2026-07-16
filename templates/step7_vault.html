@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Corp - Setup Complete</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">NEXUS CORP</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Setup</a>
+                <a href="#" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="setup">
+        <div class="setup-container">
+            <div class="setup-header">
+                <h1>Complete Setup</h1>
+                <p>Enter all authentication tokens to finalize your account setup.</p>
+            </div>
+
+            <div class="setup-progress">
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Account</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Verification</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Integration</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Monitoring</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Diagnostics</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Configuration</span>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <div class="setup-section">
+                    <h2>Authentication Tokens</h2>
+                    <p>Enter the authentication tokens generated during each setup phase.</p>
+                    
+                    <div class="token-form">
+                        <div class="token-row">
+                            <label>Phase 1 Token:</label>
+                            <input type="text" id="token1" placeholder="Enter Phase 1 token...">
+                        </div>
+                        
+                        <div class="token-row">
+                            <label>Phase 2 Token:</label>
+                            <input type="text" id="token2" placeholder="Enter Phase 2 token...">
+                        </div>
+                        
+                        <div class="token-row">
+                            <label>Phase 3 Token:</label>
+                            <input type="text" id="token3" placeholder="Enter Phase 3 token...">
+                        </div>
+                        
+                        <div class="token-row">
+                            <label>Phase 4 Token:</label>
+                            <input type="text" id="token4" placeholder="Enter Phase 4 token...">
+                        </div>
+                        
+                        <div class="token-row">
+                            <label>Phase 5 Token:</label>
+                            <input type="text" id="token5" placeholder="Enter Phase 5 token...">
+                        </div>
+                        
+                        <div class="token-row">
+                            <label>Phase 6 Token:</label>
+                            <input type="text" id="token6" placeholder="Enter Phase 6 token...">
+                        </div>
+                        
+                        <button class="complete-button" onclick="completeSetup()">
+                            Complete Setup
+                        </button>
+                        
+                        <div id="setup-result"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <div class="setup-section">
+                    <h2>Setup Status</h2>
+                    <div class="status-list">
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">Account initialization</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">Email verification</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">Extension installation</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">System monitoring</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">Diagnostics check</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot completed"></span>
+                            <span class="status-text">Configuration setup</span>
+                            <span class="status-badge">Complete</span>
+                        </div>
+                        <div class="status-item pending">
+                            <span class="status-dot pending"></span>
+                            <span class="status-text">Final verification</span>
+                            <span class="status-badge pending">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-footer">
+                <a href="/step6/combine" class="nav-button back">← Back to Configuration</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Flag Display Modal -->
+    <div class="modal" id="flag-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Setup Complete!</h2>
+                <button class="close-button" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">✓</div>
+                <p>Your account has been successfully configured.</p>
+                <p>Here is your access code:</p>
+                <div class="flag-display">
+                    <code id="flag-value"></code>
+                    <button class="copy-button" onclick="copyFlag()">Copy</button>
+                </div>
+                <div class="flag-pieces" id="flag-pieces"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        .setup {
+            padding-top: 80px;
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        
+        .setup-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .setup-header {
+            margin-bottom: 2rem;
+        }
+        
+        .setup-header h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .setup-header p {
+            color: #666;
+        }
+        
+        .setup-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .progress-step.completed .step-number {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .progress-line {
+            width: 40px;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 0 0.5rem;
+        }
+        
+        .progress-line.completed {
+            background: #4caf50;
+        }
+        
+        .setup-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .setup-section h2 {
+            font-size: 1.25rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .setup-section > p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .token-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .token-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .token-row label {
+            min-width: 120px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .token-row input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .token-row input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .complete-button {
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s ease;
+        }
+        
+        .complete-button:hover {
+            background: #d63851;
+        }
+        
+        #setup-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        #setup-result.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        
+        #setup-result.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        
+        .status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+        
+        .status-dot.completed {
+            background: #4caf50;
+        }
+        
+        .status-dot.pending {
+            background: #ff9800;
+        }
+        
+        .status-text {
+            flex: 1;
+            color: #333;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-badge.pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .setup-footer {
+            text-align: center;
+        }
+        
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-button.back {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .nav-button.back:hover {
+            background: #eee;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: #1a1a2e;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-button:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #4caf50;
+            color: white;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .modal-body p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .flag-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .flag-display code {
+            flex: 1;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #1a1a2e;
+            word-break: break-all;
+        }
+        
+        .copy-button {
+            padding: 0.5rem 1rem;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .copy-button:hover {
+            background: #d63851;
+        }
+        
+        .flag-pieces {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .flag-piece {
+            background: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+        
+        @media (max-width: 768px) {
+            .setup-progress {
+                flex-direction: column;
+            }
+            
+            .progress-line {
+                width: 2px;
+                height: 30px;
+                margin: 0.5rem 0;
+            }
+            
+            .token-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .token-row label {
+                min-width: auto;
+            }
+        }
+    </style>
+
+    <script>
+        // Auto-fill tokens from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            for (let i = 1; i <= 6; i++) {
+                const token = localStorage.getItem(`step${i}_token`);
+                if (token) {
+                    document.getElementById(`token${i}`).value = token;
+                }
+            }
+        });
+        
+        async function completeSetup() {
+            const tokens = {};
+            for (let i = 1; i <= 6; i++) {
+                tokens[`step${i}_token`] = document.getElementById(`token${i}`).value;
+            }
+            
+            const resultMsg = document.getElementById('setup-result');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            
+            try {
+                resultMsg.textContent = 'Verifying tokens...';
+                resultMsg.className = 'processing';
+                resultMsg.style.display = 'block';
+                
+                const response = await fetch('/api/vault/unlock', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify(tokens)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultMsg.textContent = '✓ Setup completed successfully!';
+                    resultMsg.className = 'success';
+                    
+                    // Show flag modal
+                    document.getElementById('flag-value').textContent = data.flag;
+                    
+                    // Show flag pieces
+                    const piecesContainer = document.getElementById('flag-pieces');
+                    piecesContainer.innerHTML = '';
+                    data.flag_pieces.forEach((piece) => {
+                        const pieceEl = document.createElement('div');
+                        pieceEl.className = 'flag-piece';
+                        pieceEl.textContent = piece;
+                        piecesContainer.appendChild(pieceEl);
+                    });
+                    
+                    document.getElementById('flag-modal').style.display = 'flex';
+                    
+                    // Store flag
+                    localStorage.setItem('flag', data.flag);
+                } else {
+                    resultMsg.textContent = '✗ ' + data.error;
+                    resultMsg.className = 'error';
+                }
+            } catch (error) {
+                resultMsg.textContent = '✗ Network error. Please try again.';
+                resultMsg.className = 'error';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('flag-modal').style.display = 'none';
+        }
+        
+        function copyFlag() {
+            const flag = document.getElementById('flag-value').textContent;
+            navigator.clipboard.writeText(flag);
+            alert('Access code copied!');
+        }
+        
+        // Close modal on outside click
+        document.getElementById('flag-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'flag-modal') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
