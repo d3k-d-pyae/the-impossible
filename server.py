@@ -35,9 +35,11 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secrets.token_hex(32))
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-# Get the base URL from environment or default to localhost
-BASE_URL = os.environ.get('BASE_URL', 'http://localhost:9999')
-WS_URL = BASE_URL.replace('http://', 'ws://').replace('https://', 'wss://')
+# Auto-detect WebSocket URL from request
+def get_ws_url():
+    if request.is_secure:
+        return f"wss://{request.host}"
+    return f"ws://{request.host}"
 
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
@@ -353,7 +355,7 @@ def hidden_sanctum():
     hint_data = {
         "next_step": 2,
         "message": "The source code reveals secrets to those who look",
-        "websocket_hint": f"{WS_URL}/ws"
+        "websocket_hint": f"{get_ws_url()}/ws"
     }
     encoded_hint = base64.b64encode(json.dumps(hint_data).encode()).decode()
     
@@ -516,7 +518,7 @@ def extension_secret():
     extension_tokens[token] = {
         'session_id': session_id,
         'created': datetime.now(),
-        'websocket_url': f'{WS_URL}/ws',
+        'websocket_url': f'{get_ws_url()}/ws',
         'ws_token_required': True
     }
     
@@ -527,7 +529,7 @@ def extension_secret():
     return jsonify({
         'success': True,
         'token': token,
-        'websocket_url': f'{WS_URL}/ws',
+        'websocket_url': f'{get_ws_url()}/ws',
         'message': 'Extension authenticated! Connect to WebSocket with this token.',
         'next_step': 4
     })
@@ -556,7 +558,7 @@ def step4():
         return redirect('/step3')
     
     csrf_token = generate_csrf_token()
-    return render_template('step4.html', csrf_token=csrf_token, ws_url=WS_URL)
+    return render_template('step4.html', csrf_token=csrf_token, ws_url=get_ws_url())
 
 
 @socketio.on('connect')
@@ -1142,8 +1144,8 @@ if __name__ == '__main__':
     print("  - Session validation")
     print("  - Server-side step verification")
     
-    port = int(os.environ.get('PORT', 9999))
-    print(f"\nStarting server at {BASE_URL}")
+    port = int(os.environ.get('PORT', 10000))
+    print(f"\nStarting server on port {port}")
     print("=" * 60)
     
     socketio.run(app, host='0.0.0.0', port=port, debug=False)
