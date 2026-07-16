@@ -41,7 +41,9 @@ def get_ws_url():
         return f"wss://{request.host}"
     return f"ws://{request.host}"
 
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', 
+                    ping_timeout=60, ping_interval=25,
+                    transports=['websocket', 'polling'])
 
 # ============================================================================
 # SECURITY CONFIGURATION
@@ -50,7 +52,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 # Rate limiting
 rate_limits = defaultdict(list)
 RATE_LIMIT_WINDOW = 60  # seconds
-RATE_LIMIT_MAX = 30  # requests per window
+RATE_LIMIT_MAX = 50  # requests per window
 
 # IP tracking for abuse prevention
 blocked_ips = set()
